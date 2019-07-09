@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+
+    <servlet>
+        <servlet-name>BuyServlet</servlet-name>
+        <servlet-class>api.BuyServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BuyServlet</servlet-name>
+        <url-pattern>/api/v1/orders/buy</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>api.LoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/api/v1/login</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CancelOrderServlet</servlet-name>
+        <servlet-class>api.CancelOrderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CancelOrderServlet</servlet-name>
+        <url-pattern>/api/v1/orders/cancel</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ShowOrderServlet</servlet-name>
+        <servlet-class>api.ShowOrderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ShowOrderServlet</servlet-name>
+        <url-pattern>/api/v1/orders</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UpdateCreditCardServlet</servlet-name>
+        <servlet-class>api.UpdateCreditCardServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateCreditCardServlet</servlet-name>
+        <url-pattern>/api/v1/users/creditcards</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ShowProductServlet</servlet-name>
+        <servlet-class>api.ShowProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ShowProductServlet</servlet-name>
+        <url-pattern>/api/v1/products</url-pattern>
+    </servlet-mapping>
+</web-app>
+
