@@ -1,9 +1,14 @@
 package dto;
 
-public class StatusOkDto {
+public class StatusDto {
+    private String status;
 
-    String status = "ok";
+    public StatusDto() {
+    }
 
+    public StatusDto(String status) {
+        this.status = status;
+    }
 
     public String getStatus() {
         return status;

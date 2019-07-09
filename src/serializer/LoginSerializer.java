@@ -2,14 +2,13 @@ package serializer;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dto.StatusDto;
+import dto.LoginDto;
 
-public class StatusOkSerializer {
-
-    public String toJsonString(StatusDto dto) {
+public class LoginSerializer {
+    public LoginDto fromJsonString(String json) {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-        String json = gson.toJson(dto);
-        return json;
+        LoginDto dto = gson.fromJson(json, LoginDto.class);
+        return dto;
     }
 }

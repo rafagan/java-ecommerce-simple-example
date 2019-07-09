@@ -1,8 +1,7 @@
 package api;
 
-import dao.UsuarioDao;
 import dto.ShoppingCartDto;
-import dto.StatusOkDto;
+import dto.StatusDto;
 import serializer.ShoppingCartSerializer;
 import serializer.StatusOkSerializer;
 
@@ -25,7 +24,7 @@ public class BuyServlet  extends HttpServlet {
 
         resp.setContentType("application/json");
         PrintWriter out = resp.getWriter();
-        out.append(new StatusOkSerializer().toJsonString(new StatusOkDto()));
+        out.append(new StatusOkSerializer().toJsonString(new StatusDto()));
         out.close();
     }
 }

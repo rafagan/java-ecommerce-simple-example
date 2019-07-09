@@ -3,7 +3,6 @@ package model;
 import java.util.Objects;
 
 public class Usuario {
-
     private Integer id;
     private Integer codigoSeguranca;
     private String dataValidade;

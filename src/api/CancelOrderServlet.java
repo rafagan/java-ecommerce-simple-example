@@ -16,6 +16,7 @@ public class CancelOrderServlet extends HttpServlet {
         out.append("{\"type\": \"CancelOrderServlet\"}");
         out.close();
 
+        // TODO: Executar cancelamento de ordem via api
 
     }
 }
