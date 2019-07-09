@@ -16,12 +16,7 @@ import java.util.stream.Collectors;
 
 public class LoginServlet extends HttpServlet {
     /*
-    TODO: Identificar nas demais sessões se o header está devidamente inserido
-     */
-
-    /*
     TODO: misc:
-    - Tratar erros no servidor com bad request e unauthorized
     - Receber userId na url do servlet
      */
 
