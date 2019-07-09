@@ -1,7 +1,5 @@
 package dao;
 
-import model.Item;
-import model.ItemPedido;
 import model.PedidoCompra;
 import utils.ConnectionFactory;
 
