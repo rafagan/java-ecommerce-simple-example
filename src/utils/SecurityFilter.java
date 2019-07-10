@@ -34,17 +34,25 @@ public class SecurityFilter implements Filter {
             return;
         }
 
-        String[] metaData = token.split(":");
-        if(metaData.length != 2 || !HashFactory.generateTokenHash(metaData[0]).equals(token)) {
-            resp.setContentType("application/json");
-            PrintWriter out = resp.getWriter();
-            out.append(new StatusSerializer().toJsonString(new StatusDto("Invalid token")));
-            ((HttpServletResponse)resp).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            out.close();
-            return;
-        }
+        try {
+            String[] metaData = token.split(":");
+            if (metaData.length != 2 || !HashFactory.generateTokenHash(metaData[0]).equals(token)) {
+                confInvalidToken(resp);
+                return;
+            }
 
-        r.setAttribute("user", new UsuarioDao().getUser(metaData[0]));
-        chain.doFilter(req, resp);
+            r.setAttribute("user", new UsuarioDao().getUser(metaData[0]));
+            chain.doFilter(req, resp);
+        } catch (Exception e) {
+            confInvalidToken(resp);
+        }
+    }
+
+    private void confInvalidToken(ServletResponse resp) throws IOException {
+        resp.setContentType("application/json");
+        PrintWriter out = resp.getWriter();
+        out.append(new StatusSerializer().toJsonString(new StatusDto("Invalid token")));
+        ((HttpServletResponse) resp).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        out.close();
     }
 }

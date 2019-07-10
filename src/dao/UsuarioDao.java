@@ -15,12 +15,12 @@ public class UsuarioDao {
             stmt = c.prepareStatement(
                     "Update usuario set numeroCartao = ? , codigoSeguranca = ? , dataValidade = ? where id = ?");
             stmt.setString(1, numeroCartao);
-            stmt.setString(2, dataValidade);
-            stmt.setInt(3, codigoSeguranca);
+            stmt.setInt(2, codigoSeguranca);
+            stmt.setString(3, dataValidade);
             stmt.setInt(4, id);
 
-            int retorno = stmt.executeUpdate();
-            return (retorno > 0);
+            int result = stmt.executeUpdate();
+            return (result > 0);
         } catch (Exception e) {
             return false;
         }

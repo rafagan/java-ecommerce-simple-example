@@ -2,6 +2,7 @@ package dto;
 
 public class UserDto extends CreditCardDto {
     private String login;
+    private Integer id;
 
     public String getLogin() {
         return login;
@@ -11,14 +12,22 @@ public class UserDto extends CreditCardDto {
         this.login = login;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "UserDto{" +
                 "login='" + login + '\'' +
-                ", codigoSeguranca='" + codigoSeguranca + '\'' +
+                ", id=" + id +
+                ", codigoSeguranca=" + codigoSeguranca +
                 ", dataValidade='" + dataValidade + '\'' +
                 ", numeroCartao='" + numeroCartao + '\'' +
-                ", userId=" + userId +
                 '}';
     }
 }

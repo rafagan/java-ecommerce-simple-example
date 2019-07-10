@@ -1,11 +1,9 @@
 package dto;
 
 public class CreditCardDto {
-
     protected Integer codigoSeguranca;
     protected String dataValidade;
     protected String numeroCartao;
-    protected Integer userId;
 
     public CreditCardDto() {
     }
@@ -34,21 +32,12 @@ public class CreditCardDto {
         this.numeroCartao = numeroCartao;
     }
 
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
     @Override
     public String toString() {
         return "CreditCardDto{" +
                 "codigoSeguranca=" + codigoSeguranca +
                 ", dataValidade='" + dataValidade + '\'' +
-                ", numeroCartao='" + numeroCartao + '\'' +
-                ", userId=" + userId +
+                ", numeroCartao='" + numeroCartao +
                 '}';
     }
 }

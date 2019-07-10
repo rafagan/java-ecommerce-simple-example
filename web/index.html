@@ -80,6 +80,7 @@
                             <input id="credit_card_cvv" type="number">
                         </li>
                     </ul>
+                    <button onclick="updateCreditCard()">Editar</button>
                 </div>
             </div>
         </div>
@@ -91,6 +92,7 @@
         if(token != null) {
             toggleAfterLogin();
             loadOrders();
+            loadUser();
         }
         var items = [];
         var orders = [];
@@ -114,7 +116,7 @@
             ajax.send(null);
         }
 
-        function postLogin(username, password, onSuccess, onError) {
+        function putLogin(username, password, onSuccess, onError) {
             var ajax = new XMLHttpRequest();
             ajax.onreadystatechange = function() {
                 if (ajax.readyState === 4) {
@@ -124,7 +126,10 @@
                         onSuccess(jsonObject);
                     } else {
                         var text = ajax.responseText;
-                        var jsonObject = JSON.parse(text);
+                        var jsonObject = null;
+                        try {
+                            jsonObject = JSON.parse(text);
+                        } catch (e) {}
                         if(jsonObject != null) {
                             onError(jsonObject);
                         } else {
@@ -161,6 +166,59 @@
             ajax.send(null);
         }
 
+        function getUser(onSuccess, onError) {
+            var ajax = new XMLHttpRequest();
+            ajax.onreadystatechange = function() {
+                if (ajax.readyState === 4) {
+                    if (ajax.status === 200) {
+                        var jsonText = ajax.responseText;
+                        var jsonObject = JSON.parse(jsonText);
+                        onSuccess(jsonObject);
+                    } else {
+                        onError(ajax.responseText);
+                    }
+                }
+            };
+
+            ajax.open('GET', 'http://localhost:8080/api/v1/users/current', true);
+            ajax.setRequestHeader('Authorization', token);
+            ajax.send(null);
+        }
+
+        function putCreditCard(number, date, cvv, onSuccess, onError) {
+            var ajax = new XMLHttpRequest();
+            ajax.onreadystatechange = function() {
+                if (ajax.readyState === 4) {
+                    if (ajax.status === 200) {
+                        var jsonText = ajax.responseText;
+                        var jsonObject = JSON.parse(jsonText);
+                        onSuccess(jsonObject);
+                    } else {
+                        var text = ajax.responseText;
+                        var jsonObject = null;
+                        try {
+                            jsonObject = JSON.parse(text);
+                        } catch (e) {}
+
+                        if(jsonObject != null) {
+                            onError(jsonObject);
+                        } else {
+                            onError(text);
+                        }
+                    }
+                }
+            };
+
+            ajax.open('PUT', 'http://localhost:8080/api/v1/users/creditcards', true);
+            var body = JSON.stringify({
+                "codigoSeguranca": cvv,
+                "dataValidade": date,
+                "numeroCartao": number
+            });
+            ajax.setRequestHeader('Authorization', token);
+            ajax.send(body);
+        }
+
         function loadItems(description) {
             getItems(description, function(products) {
                 items = products;
@@ -193,10 +251,11 @@
             var username = document.getElementById('username').value;
             var password = document.getElementById('password').value;
 
-            postLogin(username, password, function(tokenDto) {
+            putLogin(username, password, function(tokenDto) {
                 token = tokenDto.status;
                 sessionStorage.setItem('token', token);
                 loadOrders();
+                loadUser();
                 toggleAfterLogin();
             }, function(error) {
                 if(error.status != null) {
@@ -257,6 +316,36 @@
                 }
             }, function(error) {
                 console.error(error);
+            });
+        }
+
+        function loadUser() {
+            getUser(function(user) {
+                var number = document.getElementById('credit_card_number');
+                var date = document.getElementById('credit_card_date');
+                var cvv = document.getElementById('credit_card_cvv');
+
+                number.value = user.numeroCartao;
+                date.value = user.dataValidade;
+                cvv.value = user.codigoSeguranca;
+            }, function(error) {
+                console.error(error);
+            });
+        }
+
+        function updateCreditCard() {
+            var number = document.getElementById('credit_card_number').value;
+            var date = document.getElementById('credit_card_date').value;
+            var cvv = document.getElementById('credit_card_cvv').value;
+
+            putCreditCard(number, date, cvv, function() {
+                alert('Editado!');
+            }, function(error) {
+                if(error.status != null) {
+                    alert(error.status);
+                } else {
+                    console.log(error);
+                }
             });
         }
     </script>

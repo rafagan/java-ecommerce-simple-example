@@ -35,7 +35,7 @@ public class UserSerializer {
         userDto.setCodigoSeguranca(user.getCodigoSeguranca());
         userDto.setDataValidade(user.getDataValidade());
         userDto.setNumeroCartao(user.getNumeroCartao());
-        userDto.setUserId(user.getId());
+        userDto.setId(user.getId());
         return userDto;
     }
 }
