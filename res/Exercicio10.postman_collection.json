@@ -1,0 +1,223 @@
+{
+	"info": {
+		"_postman_id": "9b124486-fa61-417a-9d82-e8acacccfe98",
+		"name": "Exercicio10",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "BuyServlet",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "rafagan:f16ca593f3689e747530902e161cd44f52003e3b073f472abd4ff1176e0878f6",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n\t{\n\t\t\"itemId\": 1,\n\t\t\"amount\": 10\n\t},\n\t{\n\t\t\"itemId\": 2,\n\t\t\"amount\": 20\n\t},\n\t{\n\t\t\"itemId\": 3,\n\t\t\"amount\": 30\n\t}\n]"
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/orders/buy",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"orders",
+						"buy"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LoginServlet",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"login\": \"rafagan\",\n\t\"password\": \"1234\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CancelOrderServlet",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "rafagan:f16ca593f3689e747530902e161cd44f52003e3b073f472abd4ff1176e0878f6",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/v1/orders/cancel?orderId=11",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"orders",
+						"cancel"
+					],
+					"query": [
+						{
+							"key": "orderId",
+							"value": "11"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ShowOrderServlet",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "rafagan:f16ca593f3689e747530902e161cd44f52003e3b073f472abd4ff1176e0878f6",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/v1/orders?userId=1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"orders"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ShowProductServlet",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "rafagan:f16ca593f3689e747530902e161cd44f52003e3b073f472abd4ff1176e0878f6",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/v1/products",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"products"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateCreditCardServlet",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "rafagan:f16ca593f3689e747530902e161cd44f52003e3b073f472abd4ff1176e0878f6",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"codigoSeguranca\": \"gay\",\n\t\"dataValidade\" : \"13123\",\n\t\"numeroCartao\" : \"513\",\n\t\"userId\" : \"1\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/users/creditcards",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"creditcards"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

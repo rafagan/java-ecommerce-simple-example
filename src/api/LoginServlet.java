@@ -15,11 +15,6 @@ import java.io.PrintWriter;
 import java.util.stream.Collectors;
 
 public class LoginServlet extends HttpServlet {
-    /*
-    TODO: misc:
-    - Receber userId na url do servlet
-     */
-
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");

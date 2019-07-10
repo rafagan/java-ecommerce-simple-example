@@ -6,7 +6,7 @@ public class Item {
     private Integer id;
     private String descricao;
     private String nome;
-    private String destalhes;
+    private String detalhes;
 
     public Item() {
     }
@@ -48,12 +48,12 @@ public class Item {
         this.nome = nome;
     }
 
-    public String getDestalhes() {
-        return destalhes;
+    public String getDetalhes() {
+        return detalhes;
     }
 
-    public void setDestalhes(String destalhes) {
-        this.destalhes = destalhes;
+    public void setDetalhes(String detalhes) {
+        this.detalhes = detalhes;
     }
 
     @Override
@@ -62,7 +62,7 @@ public class Item {
                 "id=" + id +
                 ", descricao='" + descricao + '\'' +
                 ", nome='" + nome + '\'' +
-                ", destalhes='" + destalhes + '\'' +
+                ", detalhes='" + detalhes + '\'' +
                 '}';
     }
 }

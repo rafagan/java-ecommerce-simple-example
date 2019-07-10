@@ -18,7 +18,7 @@ public class SecurityFilter implements Filter {
             FilterChain chain) throws IOException, ServletException
     {
         HttpServletRequest r = (HttpServletRequest) req;
-        String[] freePaths = new String[]{"api/v1/login"};
+        String[] freePaths = new String[]{"api/v1/login", "api/v1/products"};
         String url = r.getRequestURL().toString();
 
         for(String path: freePaths) {
@@ -29,6 +29,11 @@ public class SecurityFilter implements Filter {
         }
 
         String token = r.getHeader("Authorization");
+        if(token == null && !url.contains("api/")) {
+            chain.doFilter(req, resp);
+            return;
+        }
+
         String[] metaData = token.split(":");
         if(metaData.length != 2 || !HashFactory.generateTokenHash(metaData[0]).equals(token)) {
             resp.setContentType("application/json");

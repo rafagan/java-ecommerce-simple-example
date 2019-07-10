@@ -34,7 +34,7 @@ public class ItemDao {
                 Item i = new Item();
                 i.setDescricao(res.getString("descricao"));
                 i.setNome(res.getString("nome"));
-                i.setDestalhes(res.getString("detalhes"));
+                i.setDetalhes(res.getString("detalhes"));
                 i.setId(res.getInt(("id")));
 
                 items.add(i);
