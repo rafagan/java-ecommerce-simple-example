@@ -25,7 +25,7 @@ public class LoginServlet extends HttpServlet {
 
         String hash = HashFactory.generatePasswordHash(dto.getPassword());
         if(!hash.equals(new UsuarioDao().getUserPassword(dto.getLogin()))) {
-            out.append(new StatusSerializer().toJsonString(new StatusDto("Invalid login or password")));
+            out.append(new StatusSerializer().toJsonString(new StatusDto("Login ou senha inválidos")));
             resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         } else {
             String token = HashFactory.generateTokenHash(dto.getLogin());

@@ -28,7 +28,7 @@ public class UpdateCreditCardServlet  extends HttpServlet {
 
         resp.setContentType("application/json");
         PrintWriter out = resp.getWriter();
-        out.append(new StatusSerializer().toJsonString(new StatusDto()));
+        out.append(new StatusSerializer().toJsonString(new StatusDto("ok")));
         out.close();
     }
 }
