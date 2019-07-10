@@ -21,7 +21,7 @@
 <body>
     <div class="row">
         <div class="column">
-            <h1>Itens a venda</h1>
+            <h1>Itens mais vendidos</h1>
 
             <label for="description_filter">Filtro por descrição: </label>
             <input id="description_filter" type="text">
@@ -162,6 +162,25 @@
             };
 
             ajax.open('GET', 'http://localhost:8080/api/v1/orders', true);
+            ajax.setRequestHeader('Authorization', token);
+            ajax.send(null);
+        }
+
+        function deleteOrder(orderId, onSuccess, onError) {
+            var ajax = new XMLHttpRequest();
+            ajax.onreadystatechange = function() {
+                if (ajax.readyState === 4) {
+                    if (ajax.status === 200) {
+                        var jsonText = ajax.responseText;
+                        var jsonObject = JSON.parse(jsonText);
+                        onSuccess(jsonObject);
+                    } else {
+                        onError(ajax.responseText);
+                    }
+                }
+            };
+
+            ajax.open('DELETE', 'http://localhost:8080/api/v1/orders/cancel?orderId=' + orderId, true);
             ajax.setRequestHeader('Authorization', token);
             ajax.send(null);
         }
@@ -307,11 +326,12 @@
                 ul.innerText = '';
                 for(var i = 0; i < orders.length; i++) {
                     var order = orders[i];
-                    var li = document.createElement("li");
+                    var li = document.createElement('li');
+                    li.setAttribute('id', 'order_' + i);
                     li.innerHTML =
                         '<p>Data: ' + order['data'] + '</p>' +
                         '<p>Código de confirmação: ' + order['id'] + '</p>' +
-                        '<button>Cancelar</button>';
+                        '<button onclick="cancelOrder(this)">Cancelar</button>';
                     ul.appendChild(li);
                 }
             }, function(error) {
@@ -340,6 +360,33 @@
 
             putCreditCard(number, date, cvv, function() {
                 alert('Editado!');
+            }, function(error) {
+                if(error.status != null) {
+                    alert(error.status);
+                } else {
+                    console.log(error);
+                }
+            });
+        }
+
+        function cancelOrder(button) {
+            var orderIndex = button.parentNode.getAttribute('id').split('_')[1];
+            var order = orders[orderIndex];
+
+            var today = new Date().getTime();
+            var threeDaysMilliseconds = 3 * 24 * 60 * 60 * 1000;
+            var date = order['data'];
+            var orderId = order['id'];
+            var dateParsedMillis = Date.parse(date);
+
+            if(!isNaN(dateParsedMillis) && (dateParsedMillis + threeDaysMilliseconds) < today) {
+                alert('Pedidos maiores do que três dias não podem ser cancelados');
+                return;
+            }
+
+            deleteOrder(orderId, function() {
+                var view = document.getElementById('order_' + orderIndex);
+                view.parentNode.removeChild(view);
             }, function(error) {
                 if(error.status != null) {
                     alert(error.status);
