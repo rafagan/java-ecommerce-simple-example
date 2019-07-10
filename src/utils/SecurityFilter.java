@@ -1,7 +1,8 @@
 package utils;
 
+import dao.UsuarioDao;
 import dto.StatusDto;
-import serializer.StatusOkSerializer;
+import serializer.StatusSerializer;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -32,11 +33,13 @@ public class SecurityFilter implements Filter {
         if(metaData.length != 2 || !HashFactory.generateTokenHash(metaData[0]).equals(token)) {
             resp.setContentType("application/json");
             PrintWriter out = resp.getWriter();
-            out.append(new StatusOkSerializer().toJsonString(new StatusDto("Invalid token")));
+            out.append(new StatusSerializer().toJsonString(new StatusDto("Invalid token")));
             ((HttpServletResponse)resp).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             out.close();
             return;
         }
+
+        r.setAttribute("user", new UsuarioDao().getUser(metaData[0]));
         chain.doFilter(req, resp);
     }
 }

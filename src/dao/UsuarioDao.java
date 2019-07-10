@@ -1,5 +1,6 @@
 package dao;
 
+import model.Usuario;
 import utils.ConnectionFactory;
 
 import java.sql.Connection;
@@ -41,9 +42,36 @@ public class UsuarioDao {
             }
 
             c.close();
-        } catch(Exception e){
+        } catch(Exception e) {
             e.printStackTrace();
         }
         return password;
+    }
+
+    public Usuario getUser(String login) {
+        String query = "select * from usuario as u where u.login = ?";
+
+        Usuario user = new Usuario();
+        try {
+            Connection c = ConnectionFactory.factory();
+            PreparedStatement stmt = c.prepareStatement(query);
+            stmt.setString(1, login);
+            ResultSet res = stmt.executeQuery();
+
+            // Só terá 1
+            while(res.next()) {
+                user.setSenha(res.getString("senha"));
+                user.setCodigoSeguranca(res.getInt("codigoSeguranca"));
+                user.setDataValidade(res.getString("dataValidade"));
+                user.setId(res.getInt("id"));
+                user.setNumeroCartao(res.getString("numeroCartao"));
+                user.setLogin(res.getString("login"));
+            }
+
+            c.close();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+        return user;
     }
 }

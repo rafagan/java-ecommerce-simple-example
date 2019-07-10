@@ -4,7 +4,7 @@ import dao.UsuarioDao;
 import dto.LoginDto;
 import dto.StatusDto;
 import serializer.LoginSerializer;
-import serializer.StatusOkSerializer;
+import serializer.StatusSerializer;
 import utils.HashFactory;
 
 import javax.servlet.http.HttpServlet;
@@ -30,11 +30,11 @@ public class LoginServlet extends HttpServlet {
 
         String hash = HashFactory.generatePasswordHash(dto.getPassword());
         if(!hash.equals(new UsuarioDao().getUserPassword(dto.getLogin()))) {
-            out.append(new StatusOkSerializer().toJsonString(new StatusDto("Invalid login or password")));
+            out.append(new StatusSerializer().toJsonString(new StatusDto("Invalid login or password")));
             resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         } else {
             String token = HashFactory.generateTokenHash(dto.getLogin());
-            out.append(new StatusOkSerializer().toJsonString(new StatusDto(token)));
+            out.append(new StatusSerializer().toJsonString(new StatusDto(token)));
         }
 
         out.close();

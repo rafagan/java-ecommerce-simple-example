@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dto.StatusDto;
 
-public class StatusOkSerializer {
+public class StatusSerializer {
 
     public String toJsonString(StatusDto dto) {
         GsonBuilder builder = new GsonBuilder();

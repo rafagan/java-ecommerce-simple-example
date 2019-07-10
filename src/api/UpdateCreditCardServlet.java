@@ -4,7 +4,7 @@ import dao.UsuarioDao;
 import dto.CreditCardDto;
 import dto.StatusDto;
 import serializer.CreditCardSerializer;
-import serializer.StatusOkSerializer;
+import serializer.StatusSerializer;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +28,7 @@ public class UpdateCreditCardServlet  extends HttpServlet {
 
         resp.setContentType("application/json");
         PrintWriter out = resp.getWriter();
-        out.append(new StatusOkSerializer().toJsonString(new StatusDto()));
+        out.append(new StatusSerializer().toJsonString(new StatusDto()));
         out.close();
     }
 }

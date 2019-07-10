@@ -3,19 +3,11 @@ package dao;
 import model.PedidoCompra;
 import utils.ConnectionFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PedidoCompraDao {
-    public static void main(String[] args) {
-        new PedidoCompraDao().cancelOrder(1);
-    }
-
-
     public List<PedidoCompra> getUserOrders(Integer userId) {
         String query =
                 "select * from pedidocompra as pc where pc.usuarioId = ? order by pc.data desc";
@@ -52,11 +44,40 @@ public class PedidoCompraDao {
             Connection c = ConnectionFactory.factory();
             stmt = c.prepareStatement("Delete from pedidocompra where id = ?");
             stmt.setInt(1, orderId);
-            int retorno = stmt.executeUpdate();
-            return (retorno > 0);
+            int result = stmt.executeUpdate();
+            return (result > 0);
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public PedidoCompra createOrder(PedidoCompra order) {
+        PreparedStatement stmt;
+        try {
+            Connection c = ConnectionFactory.factory();
+            stmt = c.prepareStatement(
+                    "Insert into pedidocompra (data, usuarioId) values (?, ?)",
+                    Statement.RETURN_GENERATED_KEYS);
+            stmt.setDate(1, order.getData());
+            stmt.setInt(2, order.getUsuarioId());
+
+            int result = stmt.executeUpdate();
+            if(result <= 0) { return null; }
+
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    order.setId(generatedKeys.getInt(1));
+                }
+                else {
+                     return null;
+                }
+            }
+
+            return order;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }
