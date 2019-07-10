@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class UsuarioDao {
-    public boolean updateCreditCard(Integer id, String numeroCartao, String codigoSeguranca, String dataValidade) {
+    public boolean updateCreditCard(Integer id, String numeroCartao, Integer codigoSeguranca, String dataValidade) {
         try {
             PreparedStatement stmt;
             Connection c = ConnectionFactory.factory();
@@ -16,7 +16,7 @@ public class UsuarioDao {
                     "Update usuario set numeroCartao = ? , codigoSeguranca = ? , dataValidade = ? where id = ?");
             stmt.setString(1, numeroCartao);
             stmt.setString(2, dataValidade);
-            stmt.setString(3, codigoSeguranca);
+            stmt.setInt(3, codigoSeguranca);
             stmt.setInt(4, id);
 
             int retorno = stmt.executeUpdate();

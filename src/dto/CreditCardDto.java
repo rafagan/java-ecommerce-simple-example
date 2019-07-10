@@ -2,19 +2,19 @@ package dto;
 
 public class CreditCardDto {
 
-    private String codigoSeguranca;
-    private String dataValidade;
-    private String numeroCartao;
-    private Integer userId;
+    protected Integer codigoSeguranca;
+    protected String dataValidade;
+    protected String numeroCartao;
+    protected Integer userId;
 
     public CreditCardDto() {
     }
 
-    public String getCodigoSeguranca() {
+    public Integer getCodigoSeguranca() {
         return codigoSeguranca;
     }
 
-    public void setCodigoSeguranca(String codigoSeguranca) {
+    public void setCodigoSeguranca(Integer codigoSeguranca) {
         this.codigoSeguranca = codigoSeguranca;
     }
 

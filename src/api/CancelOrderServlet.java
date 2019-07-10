@@ -22,7 +22,7 @@ public class CancelOrderServlet extends HttpServlet {
             new PedidoCompraDao().cancelOrder(orderId);
             out.append(new StatusSerializer().toJsonString(new StatusDto("ok")));
         } catch (Exception e) {
-            out.append(new StatusSerializer().toJsonString(new StatusDto("Invalid userId")));
+            out.append(new StatusSerializer().toJsonString(new StatusDto("Invalid orderId")));
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
 

@@ -3,7 +3,7 @@ package api;
 import dao.UsuarioDao;
 import dto.CreditCardDto;
 import dto.StatusDto;
-import serializer.CreditCardSerializer;
+import serializer.UserSerializer;
 import serializer.StatusSerializer;
 
 import javax.servlet.http.HttpServlet;
@@ -18,7 +18,7 @@ public class UpdateCreditCardServlet  extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String body = req.getReader().lines().collect(Collectors.joining());
-        CreditCardDto dto = new CreditCardSerializer().fromJsonString(body);
+        CreditCardDto dto = new UserSerializer().fromJsonString(body);
 
         new UsuarioDao().updateCreditCard(
                 dto.getUserId(),

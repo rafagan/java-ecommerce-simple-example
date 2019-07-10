@@ -21,7 +21,7 @@
 <body>
     <div class="row">
         <div class="column">
-            <h1>Itens mais vendidos</h1>
+            <h1>Itens a venda</h1>
 
             <label for="description_filter">Filtro por descrição: </label>
             <input id="description_filter" type="text">
@@ -31,7 +31,7 @@
         <div class="column">
             <div id="login">
                 <h1>Login</h1>
-                <h3>Faça o login para visualizar o carrinho de compras</h3>
+                <h3>Faça o login para visualizar o carrinho de compras e dados do usuário</h3>
 
                 <div>
                     <label for="username">Usuário:</label>
@@ -43,8 +43,44 @@
                 </div>
                 <button onclick="login()">Login</button>
             </div>
-            <div id="shopping_cart" class="hide">
-                <h1>Carrinho de compras</h1>
+            <div id="after_login" class="hide">
+                <div id="shopping_cart">
+                    <h1>Carrinho de compras</h1>
+
+                    <h3>Adicione itens ao carrinho:</h3>
+                    <ul id="shopping_cart_list"></ul>
+                    <button onclick="generateEmptyShoppingCartEntry()">Adicionar</button>
+                    <button onclick="buy()">Comprar</button>
+                </div>
+                <div id="profile">
+                    <h1>Profile</h1>
+
+                    <h3>Compras efetuadas:</h3>
+                    <div>
+                        <ul id="orders">
+                            <li>
+                                Nome: <span>nome</span>,
+                                data: <span>data</span>
+                                <button>Cancelar</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <h3>Cartão de crédito</h3>
+                    <ul>
+                        <li>
+                            <label for="credit_card_number">Número do cartão</label>
+                            <input id="credit_card_number" type="number">
+                        </li>
+                        <li>
+                            <label for="credit_card_date">Data de validade</label>
+                            <input id="credit_card_date" type="text">
+                        </li>
+                        <li>
+                            <label for="credit_card_cvv">Código de segurança</label>
+                            <input id="credit_card_cvv" type="number">
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -53,8 +89,11 @@
         loadItems();
         var token = sessionStorage.getItem('token');
         if(token != null) {
-            toggleShoppingCart();
+            toggleAfterLogin();
+            loadOrders();
         }
+        var items = [];
+        var orders = [];
 
         function getItems(description, onSuccess, onError) {
             var ajax = new XMLHttpRequest();
@@ -103,8 +142,28 @@
             ajax.send(body);
         }
 
+        function getOrders(onSuccess, onError) {
+            var ajax = new XMLHttpRequest();
+            ajax.onreadystatechange = function() {
+                if (ajax.readyState === 4) {
+                    if (ajax.status === 200) {
+                        var jsonText = ajax.responseText;
+                        var jsonObject = JSON.parse(jsonText);
+                        onSuccess(jsonObject);
+                    } else {
+                        onError(ajax.responseText);
+                    }
+                }
+            };
+
+            ajax.open('GET', 'http://localhost:8080/api/v1/orders', true);
+            ajax.setRequestHeader('Authorization', token);
+            ajax.send(null);
+        }
+
         function loadItems(description) {
             getItems(description, function(products) {
+                items = products;
                 var ul = document.getElementById('items');
                 ul.innerText = '';
                 for(var i = 0; i < products.length; i++) {
@@ -116,13 +175,15 @@
                         '<p>Detalhes: ' + product['detalhes'] + '</p>';
                     ul.appendChild(li);
                 }
+
+                generateEmptyShoppingCartEntry();
             }, function(error) {
                 console.error(error);
             });
         }
 
-        function toggleShoppingCart() {
-            var shoppingCartHtml = document.getElementById('shopping_cart');
+        function toggleAfterLogin() {
+            var shoppingCartHtml = document.getElementById('after_login');
             var loginHtml = document.getElementById('login');
             shoppingCartHtml.classList.toggle('hide');
             loginHtml.classList.toggle('hide');
@@ -133,9 +194,10 @@
             var password = document.getElementById('password').value;
 
             postLogin(username, password, function(tokenDto) {
-                toggleShoppingCart();
                 token = tokenDto.status;
                 sessionStorage.setItem('token', token);
+                loadOrders();
+                toggleAfterLogin();
             }, function(error) {
                 if(error.status != null) {
                     alert(error.status);
@@ -145,6 +207,58 @@
             });
         }
 
+        function generateEmptyShoppingCartEntry() {
+            var container = document.getElementById('shopping_cart_list');
+            var li = document.createElement('li');
+            var div1 = document.createElement('div');
+            var div2 = document.createElement('div');
+            var label1 = document.createElement('label');
+            label1.innerHTML = 'Item: ';
+            var label2 = document.createElement('label');
+            label2.innerHTML = 'Quantidade: ';
+            var input = document.createElement('input');
+            input.setAttribute('type', 'text');
+            var select = document.createElement('select');
+
+            for(var i = 0; i < items.length; i++) {
+                var item = items[i];
+                var option = document.createElement('option');
+                option.text = item['nome'];
+                option.value = item['id'];
+                select.add(option);
+            }
+
+            div1.appendChild(label1);
+            div1.appendChild(select);
+            div2.appendChild(label2);
+            div2.appendChild(input);
+            li.appendChild(div1);
+            li.appendChild(div2);
+            container.appendChild(li);
+        }
+
+        function buy() {
+
+        }
+
+        function loadOrders() {
+            getOrders(function(orders) {
+                this.orders = orders;
+                var ul = document.getElementById('orders');
+                ul.innerText = '';
+                for(var i = 0; i < orders.length; i++) {
+                    var order = orders[i];
+                    var li = document.createElement("li");
+                    li.innerHTML =
+                        '<p>Data: ' + order['data'] + '</p>' +
+                        '<p>Código de confirmação: ' + order['id'] + '</p>' +
+                        '<button>Cancelar</button>';
+                    ul.appendChild(li);
+                }
+            }, function(error) {
+                console.error(error);
+            });
+        }
     </script>
 </body>
 </html>
