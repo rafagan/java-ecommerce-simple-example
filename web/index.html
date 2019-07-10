@@ -96,6 +96,7 @@
         }
         var items = [];
         var orders = [];
+        var shoppingCart = [];
 
         function getItems(description, onSuccess, onError) {
             var ajax = new XMLHttpRequest();
@@ -285,6 +286,36 @@
             });
         }
 
+        function postBuy(data, onSuccess, onError) {
+            var ajax = new XMLHttpRequest();
+            ajax.onreadystatechange = function() {
+                if (ajax.readyState === 4) {
+                    if (ajax.status === 200) {
+                        var jsonText = ajax.responseText;
+                        var jsonObject = JSON.parse(jsonText);
+                        onSuccess(jsonObject);
+                    } else {
+                        var text = ajax.responseText;
+                        var jsonObject = null;
+                        try {
+                            jsonObject = JSON.parse(text);
+                        } catch (e) {}
+
+                        if(jsonObject != null) {
+                            onError(jsonObject);
+                        } else {
+                            onError(text);
+                        }
+                    }
+                }
+            };
+
+            ajax.open('POST', 'http://localhost:8080/api/v1/orders/buy', true);
+            var body = JSON.stringify(data);
+            ajax.setRequestHeader('Authorization', token);
+            ajax.send(body);
+        }
+
         function generateEmptyShoppingCartEntry() {
             var container = document.getElementById('shopping_cart_list');
             var li = document.createElement('li');
@@ -313,10 +344,28 @@
             li.appendChild(div1);
             li.appendChild(div2);
             container.appendChild(li);
+
+            shoppingCart.push({select: select, input: input});
         }
 
         function buy() {
+            var json = [];
+            for(var i = 0; i < shoppingCart.length; i++) {
+                var orderItem = shoppingCart[i];
+                json.push({itemId: orderItem.select.value, amount: orderItem.input.value})
+            }
 
+            postBuy(json, function() {
+                document.getElementById('shopping_cart_list').innerHTML = '';
+                generateEmptyShoppingCartEntry();
+                loadOrders()
+            }, function(error) {
+                if(error.status != null) {
+                    alert(error.status);
+                } else {
+                    console.log(error);
+                }
+            });
         }
 
         function loadOrders() {
