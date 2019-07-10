@@ -1,8 +1,10 @@
 package api;
 
 import dao.PedidoCompraDao;
+import dto.StatusDto;
 import model.PedidoCompra;
 import serializer.OrderSerializer;
+import serializer.StatusSerializer;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,13 +17,19 @@ public class ShowOrderServlet  extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Integer userId = Integer.parseInt( req.getParameter("userId"));
-
         resp.setContentType("application/json");
         PrintWriter out = resp.getWriter();
-        List<PedidoCompra> pedidos = new PedidoCompraDao().getUserOrders(userId);
-        String json = new OrderSerializer().toJsonString(pedidos);
-        out.append(json);
+
+        try {
+            Integer userId = Integer.parseInt(req.getParameter("userId"));
+            List<PedidoCompra> orders = new PedidoCompraDao().getUserOrders(userId);
+            String json = new OrderSerializer().toJsonString(orders);
+            out.append(json);
+        } catch (Exception e) {
+            out.append(new StatusSerializer().toJsonString(new StatusDto("Invalid userId")));
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+
         out.close();
     }
 }
