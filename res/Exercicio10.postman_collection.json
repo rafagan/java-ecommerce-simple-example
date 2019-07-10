@@ -126,7 +126,7 @@
 					}
 				],
 				"url": {
-					"raw": "localhost:8080/api/v1/orders?userId=1",
+					"raw": "localhost:8080/api/v1/orders",
 					"host": [
 						"localhost"
 					],
@@ -135,12 +135,38 @@
 						"api",
 						"v1",
 						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUserServlet",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "rafagan:f16ca593f3689e747530902e161cd44f52003e3b073f472abd4ff1176e0878f6"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/v1/users/current",
+					"host": [
+						"localhost"
 					],
-					"query": [
-						{
-							"key": "userId",
-							"value": "1"
-						}
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"current"
 					]
 				}
 			},
@@ -155,15 +181,10 @@
 						"key": "Content-Type",
 						"value": "application/json",
 						"type": "text"
-					},
-					{
-						"key": "Authorization",
-						"value": "rafagan:f16ca593f3689e747530902e161cd44f52003e3b073f472abd4ff1176e0878f6",
-						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "localhost:8080/api/v1/products",
+					"raw": "localhost:8080/api/v1/products?descricao=Uva",
 					"host": [
 						"localhost"
 					],
@@ -175,8 +196,8 @@
 					],
 					"query": [
 						{
-							"key": "",
-							"value": ""
+							"key": "descricao",
+							"value": "Uva"
 						}
 					]
 				}
