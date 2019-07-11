@@ -1,0 +1,4 @@
+INSERT INTO exercicio10.usuario (codigoSeguranca, dataValidade, login, numeroCartao, senha, id) VALUES (13123, 'teste', 'rafagan', '513', '6d445d45da214c562da645ad6062a1088ce8a225', 1);
+INSERT INTO exercicio10.usuario (codigoSeguranca, dataValidade, login, numeroCartao, senha, id) VALUES (321, '21/01/1993', 'pedro', '4321', 'd14436600edf21c97c74b99d1d90914e2fbc0789', 2);
+INSERT INTO exercicio10.usuario (codigoSeguranca, dataValidade, login, numeroCartao, senha, id) VALUES (222, '22/01/1993', 'roberto', '5432', '706247d989f5b655e616603ce66db4137782472b', 3);
+INSERT INTO exercicio10.usuario (codigoSeguranca, dataValidade, login, numeroCartao, senha, id) VALUES (333, '23/01/1993', 'carlos', '7890', '8c21e8ee764bed14aa72b674cf267094ec8d9dc2', 4);

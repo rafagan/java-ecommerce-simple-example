@@ -1,0 +1,16 @@
+INSERT INTO exercicio10.pedidocompra (data, id, usuarioId) VALUES ('2017-07-02', 3, 2);
+INSERT INTO exercicio10.pedidocompra (data, id, usuarioId) VALUES ('2019-07-09', 5, 1);
+INSERT INTO exercicio10.pedidocompra (data, id, usuarioId) VALUES ('2019-07-09', 6, 1);
+INSERT INTO exercicio10.pedidocompra (data, id, usuarioId) VALUES ('2017-07-09', 12, 1);
+INSERT INTO exercicio10.pedidocompra (data, id, usuarioId) VALUES ('2017-07-09', 13, 1);
+INSERT INTO exercicio10.pedidocompra (data, id, usuarioId) VALUES ('2017-07-09', 14, 1);
+INSERT INTO exercicio10.pedidocompra (data, id, usuarioId) VALUES ('2017-07-09', 15, 1);
+INSERT INTO exercicio10.pedidocompra (data, id, usuarioId) VALUES ('2017-07-09', 16, 1);
+INSERT INTO exercicio10.pedidocompra (data, id, usuarioId) VALUES ('2017-07-09', 17, 1);
+INSERT INTO exercicio10.pedidocompra (data, id, usuarioId) VALUES ('2017-07-09', 18, 1);
+INSERT INTO exercicio10.pedidocompra (data, id, usuarioId) VALUES ('2017-07-09', 20, 1);
+INSERT INTO exercicio10.pedidocompra (data, id, usuarioId) VALUES ('2017-07-09', 21, 1);
+INSERT INTO exercicio10.pedidocompra (data, id, usuarioId) VALUES ('2019-07-10', 22, 1);
+INSERT INTO exercicio10.pedidocompra (data, id, usuarioId) VALUES ('2019-07-10', 23, 1);
+INSERT INTO exercicio10.pedidocompra (data, id, usuarioId) VALUES ('2019-07-10', 24, 1);
+INSERT INTO exercicio10.pedidocompra (data, id, usuarioId) VALUES ('2019-07-10', 25, 1);
